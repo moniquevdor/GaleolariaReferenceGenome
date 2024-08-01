@@ -1,3 +1,4 @@
+#This python script is adapted from Santangelo et al. 2023
 import gffutils
 
 inputgff="/fs03/tn20/Monique/referencegenome/6_Functional_Annotation/Hap1/4_cleanup/Galeolaria_caespitosa_functional_final_sorted.gff3"
