@@ -1,3 +1,4 @@
+#This python script is adapted from Santangelo et al. 2023
 import os
 import gffutils
 from collections import defaultdict
