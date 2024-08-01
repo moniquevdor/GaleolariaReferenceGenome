@@ -1,21 +1,6 @@
 #!/bin/bash
-#SBATCH -J ProcH1             
-#SBATCH -o ProcH1.out      
-#SBATCH -e ProcH1.e 
-#SBATCH --account=tn20
-#SBATCH --time=04:00:00
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=10
-#SBATCH --mem-per-cpu=10G
-#SBATCH --mail-user=monique.vandorssen@monash.edu 
-#SBATCH --mail-type=END
-#SBATCH --mail-type=FAIL
-#SBATCH --partition=genomics
-#SBATCH --qos=genomics
 
-
-# Load the anaconda module
-module load anaconda
+# Load modules
 module load samtools/1.9
 module load bamtools
 module load minimap2
