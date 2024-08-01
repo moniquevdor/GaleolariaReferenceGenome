@@ -15,6 +15,4 @@
 
 ./diamond blastp --verbose --tmpdir /fs03/tn20/Monique/referencegenome/6_Functional_Annotation/Hap1/5_diamond/blast_func/diamondtmp/ --db /fs03/tn20/Monique/referencegenome/6_Functional_Annotation/Hap1/5_diamond/blast_func/nr/nr --out /fs03/tn20/Monique/referencegenome/6_Functional_Annotation/Hap1/5_diamond/blast_func/diamond_out.txt --header simple --max-target-seqs 5 --query /fs03/tn20/Monique/referencegenome/6_Functional_Annotation/Hap1/4_cleanup/Galeolaria_caespitosa_proteins_final.fasta --max-hsps 1 --outfmt 6 qseqid qlen sseqid slen stitle pident evalue 
 
-#Filter diamond hits on R
-
-#Add diamon hits with python script
+#Filter diamond hits on R with 1_filter_diamond_hits.R
