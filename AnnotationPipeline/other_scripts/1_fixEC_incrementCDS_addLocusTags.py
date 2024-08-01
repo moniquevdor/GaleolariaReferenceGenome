@@ -1,3 +1,4 @@
+#This python script is adapted from Santangelo et al. 2023
 # Script to reformat GFF file
 
 import re
