@@ -1,16 +1,4 @@
 #!/bin/bash
-#SBATCH -J RepeatMaskerHap1             
-#SBATCH -o RepeatMaskerHap1.out      
-#SBATCH -e RepeatMaskerHap1.e  
-#SBATCH --account=tn20    
-#SBATCH -n 3                  
-#SBATCH -c 20                
-#SBATCH --mem-per-cpu=10G
-#SBATCH --mail-user=monique.vandorssen@monash.edu 
-#SBATCH --mail-type=END
-#SBATCH --mail-type=FAIL
-#SBATCH -t 150:00:00
-
 
 # load modules
 module load repeatmasker/4.1.1
@@ -33,8 +21,8 @@ blastx -query GaleoHap1-families.fa -db AnnelidProtDataDB.fasta -evalue 1e-10 -n
 #blastx output contains sequence alignments between query and subject, aka the protein coding sequences from the repeat file
 
 #We want to exclude those
-../../ProtExcluder1.2/ProtExcluder.pl GaleoHap1.lib_blast_results.txt  GaleoHap1-families.fa 
-#The resulting sequences and sequences without matching proteins are combined together and put in ìGaleoHap1-families.fanoProtFinalî 
+{your_path}/ProtExcluder1.2/ProtExcluder.pl GaleoHap1.lib_blast_results.txt  GaleoHap1-families.fa 
+#The resulting sequences and sequences without matching proteins are combined together and put in ‚ÄúGaleoHap1-families.fanoProtFinal‚Äù 
 
 #Now we can remove the repeats (without those that could code for proteins) from the genome
 # Masking
