@@ -1,3 +1,4 @@
+#This python script is adapted from Santangelo et al. 2023
 # Python script to remap attributes and fix some issues flagged by NCBI
 import os
 import re
