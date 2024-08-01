@@ -1,6 +1,19 @@
 #!/bin/bash
+#SBATCH -J SortFasta             
+#SBATCH -o SortFasta.out      
+#SBATCH -e SortFasta.e  
+#SBATCH --account=tn20 
+#SBATCH -n 1                
+#SBATCH -c 20                
+#SBATCH --mem-per-cpu=10G
+#SBATCH --mail-user=monique.vandorssen@monash.edu 
+#SBATCH --mail-type=BEGIN
+#SBATCH --mail-type=END
+#SBATCH --mail-type=FAIL
+#SBATCH -t 24:00:00
 
-pyhton 2_add_diamond_hits_products.py
+#This python script is adapted from Santangelo et al. 2023 and can be found in the folder "python scripts"
+python 2_add_diamond_hits_products.py
 
 module load gffread
 
