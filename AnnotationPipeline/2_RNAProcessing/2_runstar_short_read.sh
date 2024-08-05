@@ -1,25 +1,19 @@
 #!/bin/bash
-#SBATCH -J star_align          
-#SBATCH -o star_align.out      
-#SBATCH -e star_align.e  
-#SBATCH --account=tn20    
-#SBATCH -n 1                  
-#SBATCH -c 48                                
-#SBATCH --mail-user=emily.belcher1@monash.edu 
-#SBATCH --mail-type=BEGIN
-#SBATCH --mail-type=END
-#SBATCH --mail-type=FAIL
-#SBATCH -t 4-00:00:00   
-cd /fs03/tn20/Em/2.Star/
+
+#load modules
 module load star
+
+#generate genome index
+STAR --runThreadN 6 --runMode genomeGenerate --genomeDir {your_path}/Genome_indices/ --genomeFastaFiles {your_path}/ChromAssemblyHap1Rearranged.fasta --genomeSAindexNbases 13  
+
 # Set the directory where your fastq.gz files are located
-FASTQ_DIR="/fs03/tn20/Em/1.FastP/out_dir"
+FASTQ_DIR="{your_path}/out_dir"
 
 # Set the directory where you want to store the alignment results
-OUTPUT_DIR="/fs03/tn20/Em/2.Star/star_align_output"
+OUTPUT_DIR="{your_path}/star_align_output"
 
 # Set the path to your STAR genome index directory
-GENOME_DIR="/fs03/tn20/Em/2.Star/Genome_indices"
+GENOME_DIR="{your_path}/Genome_indices"
 
 # Ensure the output directory exists
 mkdir -p $OUTPUT_DIR
@@ -48,6 +42,5 @@ do
     # Print a message indicating completion for the current sample
     echo "Completed alignment for $SAMPLE_NAME"
 done
-
 
 
