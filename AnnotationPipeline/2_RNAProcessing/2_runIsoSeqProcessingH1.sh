@@ -6,7 +6,6 @@ module load bamtools
 module load minimap2
 module load stringtie/2.1.5
 
-
 #   Step 2 - Align RNA read to reference -> *.aligned.bam
 
 # Map to genome
