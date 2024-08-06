@@ -16,3 +16,9 @@ gffread -E -F -y Galeolaria_caespitosa_proteins_final_names.fasta -g {your_path}
 
 #get fasta nucleic acid
 gffread -F Galeolaria_caespitosa_functional_withDiamondProducts_final_sorted.gff3 -g {your_path}/ChromAssemblyHap1Final_masked.fasta -w Galeolaria_caespitosa_proteins_final_names_NucleicAcid.fasta
+
+grep '^>' Galeolaria_caespitosa_proteins_final_names.fasta | \
+awk -F 'product=' '{split($2, a, ";"); print a[1]}' | \
+sort | \
+uniq -c | \
+awk '{print $2, $3 "\t" $1}' > products_count.txt
