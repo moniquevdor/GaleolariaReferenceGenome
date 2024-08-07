@@ -5,7 +5,7 @@ from collections import defaultdict
 
 # Input and output file paths (modify these paths or use command line arguments)
 input_gff = "3_Galeolaria_caespitosa_functional_fixOverlaps.gff3"
-output_gff = "4_Galeolaria_caespitosa_functional_longest.gff3"
+output_gff = "4_Galeolaria_caespitosa_functional_longest_mod.gff3"
 temp_db = 'tmp.db'
 
 # Create a temporary database from the GFF3 file
@@ -34,26 +34,22 @@ for gene in db.features_of_type('gene'):
         # Calculate lengths of CDS regions for each mRNA isoform
         isoform_lengths = {mrna.id: sum(cds.end - cds.start for cds in db.children(mrna.id, featuretype='CDS')) for mrna in child_mrna}
         
-        # Handle isoforms with the same length
-        if len(set(isoform_lengths.values())) == 1:
-            # Toss all but the first one (or select based on additional criteria)
-            same_length_to_toss = list(isoform_lengths.keys())[1:]
-            transcripts_to_toss += same_length_to_toss
+        # Identify the longest isoform length
+        longest_isoform_length = max(isoform_lengths.values())
+        longest_isoforms = [k for k, v in isoform_lengths.items() if v == longest_isoform_length]
+        
+        # Check for functional importance
+        important_isoforms = [isoform for isoform in longest_isoforms if is_functionally_important(isoform)]
+        
+        # If there are important isoforms, keep the first one and toss all other isoforms
+        if important_isoforms:
+            # Keep the first important isoform and toss all other isoforms
+            transcripts_to_toss += [isoform for isoform in child_mrna if isoform.id != important_isoforms[0]]
         else:
-            # Identify the longest isoform length
-            longest_isoform_length = max(isoform_lengths.values())
-            longest_isoforms = [k for k, v in isoform_lengths.items() if v == longest_isoform_length]
-            
-            # Check for functional importance
-            important_isoforms = [isoform for isoform in longest_isoforms if is_functionally_important(isoform)]
-            
-            # If there are important isoforms, keep them, otherwise keep the first longest
-            if important_isoforms:
-                transcripts_to_toss += [isoform for isoform in longest_isoforms if isoform not in important_isoforms]
-            else:
-                # Toss all but the first longest isoform
-                transcripts_to_toss += longest_isoforms[1:]
+            # Toss all but the first longest isoform
+            transcripts_to_toss += [isoform.id for isoform in child_mrna if isoform.id != longest_isoforms[0]]
 
+                
 # Write the results to the output file
 with open(output_gff, 'w') as fout:
     fout.write("##gff-version 3\n")
@@ -70,3 +66,4 @@ with open(output_gff, 'w') as fout:
 
 # Clean up the temporary database
 os.remove(temp_db)
+
